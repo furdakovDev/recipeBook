@@ -1,11 +1,13 @@
 import { Ingredient } from '../shared/ingredient.model';
-import { EventEmitter } from '@angular/core';
+import { Subject } from 'rxjs';
 
 export class ShoppingListService {
-  ingredientsChanged = new EventEmitter<Ingredient[]>();
+  ingredientsChanged = new Subject<Ingredient[]>();
+  startedEdit = new Subject<string>();
+
   private ingredients: Ingredient[] = [
-    new Ingredient('Apples', 5),
-    new Ingredient('Tomatoes', 10),
+    new Ingredient('5', 'Apples', 5),
+    new Ingredient('6', 'Tomatoes', 10),
   ];
 
   getIngredients() {
@@ -14,14 +16,29 @@ export class ShoppingListService {
 
   addIngredient(ingredient: Ingredient) {
     this.ingredients.push(ingredient);
-    this.ingredientsChanged.emit(this.ingredients.slice());
+    this.ingredientsChanged.next(this.ingredients.slice());
   }
 
   addIngredients(ingredients: Ingredient[]) {
-    // for (let ingredient of ingredients) {
-    //   this.addIngredient(ingredient);
-    // }
     this.ingredients.push(...ingredients);
-    this.ingredientsChanged.emit(this.ingredients.slice());
+    this.ingredientsChanged.next(this.ingredients.slice());
+  }
+
+  getIngredient(id: string) {
+    return this.ingredients.find((ingredient: Ingredient) => ingredient.id === id);
+  }
+
+  updateIngredient(ing: Ingredient) {
+    const { id } = ing;
+    this.ingredients = this.ingredients.map(ingredient => {
+      if (ingredient.id === id) {
+        return {
+          ...ingredient,
+          ...ing,
+        };
+      }
+      return ingredient;
+    });
+    this.ingredientsChanged.next([...this.ingredients]);
   }
 }
