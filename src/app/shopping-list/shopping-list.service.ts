@@ -41,4 +41,15 @@ export class ShoppingListService {
     });
     this.ingredientsChanged.next([...this.ingredients]);
   }
+
+  deleteIngredient(id: string) {
+    const newIngredients = this.ingredients.reduce((result, current) => {
+      if (current.id === id) {
+        return result;
+      }
+      return [...result, current];
+    }, []);
+    this.ingredients = newIngredients;
+    this.ingredientsChanged.next(newIngredients);
+  }
 }

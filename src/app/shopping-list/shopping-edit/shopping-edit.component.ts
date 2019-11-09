@@ -18,24 +18,25 @@ import { Subscription } from 'rxjs';
 export class ShoppingEditComponent implements OnInit, OnDestroy {
   ingredientForm: FormGroup;
   ingredientSubscription: Subscription;
-  editMode = false;
   editedIngredient: Ingredient;
+  editMode = false;
 
   constructor(private slService: ShoppingListService) { }
 
   ngOnInit() {
-    this.ingredientForm = new FormGroup({
-      'name': new FormControl(null, Validators.required),
-      'amount': new FormControl(null, [Validators.required, this.noNegativeValidator]),
-    });
     this.ingredientSubscription = this.slService.startedEdit
       .subscribe((id: string) => {
         this.editMode = true;
-        this.editedIngredient = this.slService.getIngredient(id);
+        const ing = this.slService.getIngredient(id);
+        this.editedIngredient = ing;
         this.resetForm({
-          'name': this.editedIngredient.name,
-          'amount': this.editedIngredient.amount,
+          'name': ing.name,
+          'amount': ing.amount,
         });
+    });
+    this.ingredientForm = new FormGroup({
+      'name': new FormControl(null, Validators.required),
+      'amount': new FormControl(null, [Validators.required, this.noNegativeValidator]),
     });
   }
 
@@ -49,8 +50,6 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
         amount,
       };
       this.slService.updateIngredient(this.editedIngredient);
-      this.editedIngredient = null;
-      this.editMode = false;
     } else {
       const newIngredient = new Ingredient(`${+new Date()}-ingredient`, name, amount);
       this.slService.addIngredient(newIngredient);
@@ -59,7 +58,14 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
   }
 
   resetForm(value: { name: string, amount: number }) {
+    this.editedIngredient = null;
+    this.editMode = false;
     this.ingredientForm.reset(value || undefined);
+  }
+
+  onDelete() {
+    this.slService.deleteIngredient(this.editedIngredient.id);
+    this.resetForm(null);
   }
 
   noNegativeValidator(control: FormControl): {[s: string]: boolean} {
