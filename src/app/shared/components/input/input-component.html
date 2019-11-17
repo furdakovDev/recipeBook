@@ -1,0 +1,7 @@
+<label *ngIf="label" [for]="name">{{ label }}</label>
+<input
+  class="form-control"
+  [placeholder]="placeholder"
+  [type]="type"
+  [(ngModel)]="value"
+  (ngModelChange)="updateChanges()">
