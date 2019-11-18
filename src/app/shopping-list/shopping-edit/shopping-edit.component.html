@@ -3,20 +3,17 @@
     <form [formGroup]="ingredientForm" (ngSubmit)="onSubmit()">
       <div class="row">
         <div class="col-sm-5 form-group">
-          <label for="name">Name</label>
-          <input
+          <app-input
             formControlName="name"
-            type="text"
-            id="name"
-            class="form-control">
+            name="name"
+            label="Name"></app-input>
         </div>
         <div class="col-sm-2 form-group">
-          <label for="amount">Amount</label>
-          <input
+          <app-input
             formControlName="amount"
             type="number"
-            id="amount"
-            class="form-control">
+            name="amount"
+            label="Amount"></app-input>
           <div
             *ngIf="ingredientForm.get('amount').errors && ingredientForm.get('amount').errors.isNegative"
             class="text-danger">Amount should be more than 0</div>

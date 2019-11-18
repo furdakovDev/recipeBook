@@ -22,8 +22,8 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.addSubscription();
     this.ingredientForm = new FormGroup({
-      'name': new FormControl(null, Validators.required),
-      'amount': new FormControl(null, [Validators.required, noNegativeValidator]),
+      name: new FormControl(null, Validators.required),
+      amount: new FormControl(null, [Validators.required, noNegativeValidator]),
     });
   }
 

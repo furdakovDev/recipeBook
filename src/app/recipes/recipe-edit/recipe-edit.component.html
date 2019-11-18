@@ -21,24 +21,18 @@
         <div class="row">
           <div class="col-xs-12">
             <div class="form-group">
-              <label for="name">Name</label>
-              <input
+              <app-input
                 formControlName="name"
-                type="text"
-                id="name"
-                class="form-control">
+                label="Name"></app-input>
             </div>
           </div>
         </div>
         <div class="row">
           <div class="col-xs-12">
             <div class="form-group">
-              <label for="imagePath">Image URL</label>
-              <input
-                formControlName="imagePath"
-                type="text"
-                id="imagePath"
-                class="form-control">
+              <app-input
+                label="Image URL"
+                formControlName="imagePath"></app-input>
             </div>
           </div>
         </div>
@@ -74,16 +68,14 @@
               style="margin-top: 10px"
               [formGroupName]="i">
               <div class="col-xs-8">
-                <input
+                <app-input
                   formControlName="name"
-                  type="text"
-                  class="form-control">
+                  type="text"></app-input>
               </div>
               <div class="col-xs-2">
-                <input
+                <app-input
                   formControlName="amount"
-                  type="number"
-                  class="form-control">
+                  type="number"></app-input>
               </div>
               <div class="col-xs-2">
                 <button class="btn btn-danger" (click)="deleteControl(i)" type="button">Delete</button>

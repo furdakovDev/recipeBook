@@ -14,7 +14,7 @@ export class InputComponent implements ControlValueAccessor {
   @Input() name: string;
   @Input() label: string;
   @Input() type = 'text';
-  @Input() placeholder: string;
+  @Input() placeholder = '';
 
   value: any;
 
@@ -23,6 +23,7 @@ export class InputComponent implements ControlValueAccessor {
   onTouched: () => void = () => {};
 
   updateChanges() {
+    console.log('changes');
     this.onChange(this.value);
   }
 
