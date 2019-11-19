@@ -18,7 +18,7 @@ import { ShoppingListService } from './shopping-list/shopping-list.service';
 import { RecipeStartComponent } from './recipes/recipe-start/recipe-start.component';
 import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
 import { AuthComponent } from './auth/auth.component';
-import { InputComponent } from './shared/components/input/input-component';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -34,14 +34,14 @@ import { InputComponent } from './shared/components/input/input-component';
     RecipeStartComponent,
     RecipeEditComponent,
     AuthComponent,
-    InputComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    SharedModule,
   ],
   providers: [
     ShoppingListService,
